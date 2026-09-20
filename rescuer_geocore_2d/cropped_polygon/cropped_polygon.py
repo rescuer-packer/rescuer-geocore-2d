@@ -19,13 +19,16 @@ class CroppedPolygon:
 
 
 class CroppedPolygonBuilder:
-    def __init__(self, polygon: Polygon, crops: List[List[int]]):
+    def __init__(self, polygon: Polygon, crops: List[List[int]] = None):
         self.polygon = polygon
-        self.crops = crops
+        self.crops = crops if crops is not None else []
 
     def build(self, x: float, y: float, angle: float, radians: bool) -> CroppedPolygon:
         polygon = affinity.translate(
             affinity.rotate(self.polygon, angle, (0, 0), use_radians=radians),
             x, y)
+        if len(self.crops) == 0:
+            return CroppedPolygon(polygon, [polygon])
+
         crops = [_subpoly(polygon, ls) for ls in self.crops]
         return CroppedPolygon(polygon.convex_hull, crops)
