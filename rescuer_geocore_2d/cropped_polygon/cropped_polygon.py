@@ -28,4 +28,4 @@ class CroppedPolygonBuilder:
             affinity.rotate(self.polygon, angle, (0, 0), use_radians=radians),
             x, y)
         crops = [_subpoly(polygon, ls) for ls in self.crops]
-        return CroppedPolygon(polygon, crops)
+        return CroppedPolygon(polygon.convex_hull, crops)

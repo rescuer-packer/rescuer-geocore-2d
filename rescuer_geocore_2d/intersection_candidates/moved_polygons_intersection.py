@@ -19,8 +19,8 @@ def moved_polygons_intersection(polygons: List[Tuple[Polygon, int]], step: float
        def _inner_callback(i, j):
            if polygons[i][1] == polygons[j][1]:
                return
-           if polygons[i][0].intersects(polygons[j][0]):
-               if not polygons[i][0].touches(polygons[j][0]):
+           if big_polys[i].intersects(big_polys[j]):
+               if not big_polys[i].touches(big_polys[j]):
                    callback(i, j)
 
        process_rect_intersection(bounds, _inner_callback)
